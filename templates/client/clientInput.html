@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Client input</h1>
+    <div class="form-row">
+        <form method="POST" class="post-form">{% csrf_token %}
+            {{ clientForm.as_p }}
+            <button type="submit" class="save btn btn-default">Save</button>
+        </form>
+    </div>
+    <br/>
+    <div>
+        <a class="btn btn-default" href="{% url 'clientslist' %}">Back to list</a>
+    </div>
+{% endblock content %}

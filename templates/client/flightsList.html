@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+
+<br/>
+<form action="/client/flights/announce" method="post">
+{% csrf_token %}
+    <div>
+        {%  if request.resolver_match.kwargs.crId == '1' %}
+            <a class="btn btn-default" href="{% url 'flightslist' crId='0'  %}">Order by date</a>
+        {% else %}
+            {%  if request.resolver_match.kwargs.crId == '0' %}
+                <a class="btn btn-default" href="{% url 'flightslist' crId='1' %}">Order by date (desc)</a>
+            {% endif %}
+        {% endif %}
+
+        {%  if request.resolver_match.kwargs.crId == '0' or request.resolver_match.kwargs.crId == '1' %}
+            <a class="btn btn-default" href="{% url 'flightslist' crId='2' %}">Show only not announceds</a>
+        {% else %}
+            <a class="btn btn-default" href="{% url 'flightslist' crId='0' %}">Show all</a>
+            <input type="submit" class="btn btn-default" value="Announce selected flights." />
+        {% endif %}
+
+    </div>
+
+
+    <br/>
+    <table class="table table-bordered">
+  <thead>
+    <tr>
+        <th>Announced</th>
+        <th>Flight No</th>
+        <th>Client</th>
+        <th>Airport</th>
+        <th>Flight date</th>
+        <th>Destination</th>
+        <th>Other Dest</th>
+        <th>Is Accepted</th>
+        <th>Accept date</th>
+        <th>Accepted driver</th>
+        <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for flight in flights %}
+      <tr>
+        <td>
+        {% if request.resolver_match.kwargs.crId == '2'  %}
+            <input type="checkbox" name="Announce" value="{{ flight.id }}"/>
+        {% else %}
+            {% if flight.isAnnounced %}
+                <input type="checkbox" name="Announce" checked disabled="disabled"/>
+            {% else %}
+                <input type="checkbox" name="Announce" disabled="disabled"/>
+            {% endif %}
+        {% endif %}
+        </td>
+        <td>{{ flight.flNumber }}</td>
+        <td>{{ flight.fClient }}</td>
+        <td>{{ flight.fAirport }}</td>
+        <td>{{ flight.flDate }}</td>
+        <td>{{ flight.flDestination }}</td>
+        <td>{{ flight.flDestOther }}</td>
+        <td>{{ flight.isAccepted }}</td>
+        <td>{{ flight.accDate }}</td>
+        <td>{{ flight.accpDriver }}</td>
+        <td>
+            Show
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% if clients.has_other_pages %}
+  <ul class="pagination">
+    {% if clients.has_previous %}
+      <li><a href="?page={{ clients.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&laquo;</span></li>
+    {% endif %}
+    {% for i in clients.paginator.page_range %}
+      {% if clients.number == i %}
+        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+      {% else %}
+        <li><a href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if clients.has_next %}
+      <li><a href="?page={{ clients.next_page_number }}">&raquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&raquo;</span></li>
+    {% endif %}
+  </ul>
+{% endif %}
+
+</form>
+
+{% endblock content %}

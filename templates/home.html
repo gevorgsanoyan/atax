@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="jumbotron">
+            <h1>Hello</h1>
+            <p>You are logged in ATAX</p>
+        </div>
+    </div>
+    <div>
+        <a class="btn btn-default" href="{% url 'logout' %}">Log out</a>
+    </div>
+</div>
+{% endblock %}

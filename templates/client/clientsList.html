@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+    <div>
+        <a class="btn btn-default" href="{% url 'clientinput' %}">Client input</a>
+    </div>
+<br/>
+    <table class="table table-bordered">
+  <thead>
+    <tr>
+        <th>ID</th>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>Doc.numb.</th>
+        <th>email</th>
+        <th>Phone</th>
+        <th>Telegram</th>
+        <th>DOB</th>
+        <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for client in clients %}
+      <tr>
+        <td>{{ client.id }}</td>
+        <td>{{ client.cFirstName }}</td>
+        <td>{{ client.cLastName }}</td>
+        <td>{{ client.cDocNumber }}</td>
+        <td>{{ client.cEmail }}</td>
+        <td>{{ client.cPhone }}</td>
+        <td>{{ client.cTlgMsg }}</td>
+        <td>{{ client.cDOB }}</td>
+        <td>
+            <a class="btn btn-default" href="{% url 'clientedit' clientId=client.id %}">View/Edit</a>
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% if clients.has_other_pages %}
+  <ul class="pagination">
+    {% if clients.has_previous %}
+      <li><a href="?page={{ clients.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&laquo;</span></li>
+    {% endif %}
+    {% for i in clients.paginator.page_range %}
+      {% if clients.number == i %}
+        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+      {% else %}
+        <li><a href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if clients.has_next %}
+      <li><a href="?page={{ clients.next_page_number }}">&raquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&raquo;</span></li>
+    {% endif %}
+  </ul>
+{% endif %}
+
+
+
+{% endblock content %}

@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+    <div>
+        <a class="btn btn-default" href="{% url 'driverinput' %}">Driver input</a>
+    </div>
+<br/>
+    <table class="table table-bordered">
+  <thead>
+    <tr>
+        <th>ID</th>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>Doc.numb.</th>
+        <th>email</th>
+        <th>Phone</th>
+        <th>Telegram</th>
+        <th>DOB</th>
+        <th>Car</th>
+        <th>Reviewed</th>
+        <th>Active</th>
+        <th>Car details</th>
+        <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for driver in drivers %}
+      <tr>
+        <td>{{ driver.id }}</td>
+        <td>{{ driver.dFirstName }}</td>
+        <td>{{ driver.dLastName }}</td>
+        <td>{{ driver.dDocNumber }}</td>
+        <td>{{ driver.dEmail }}</td>
+        <td>{{ driver.dPhone }}</td>
+        <td>{{ driver.dTlgMsg }}</td>
+        <td>{{ driver.dDOB }}</td>
+        <td>{{ driver.dCar }}</td>
+        <td>{{ driver.isReviewed }}</td>
+        <td>{{ driver.isActive }}</td>
+        <td>{{ driver.dCarInfo }}</td>
+        <td>
+            <a class="btn btn-default" href="{% url 'driveredit' driverId=driver.id %}">View/Edit</a>
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% if driver.has_other_pages %}
+  <ul class="pagination">
+    {% if driver.has_previous %}
+      <li><a href="?page={{ driver.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&laquo;</span></li>
+    {% endif %}
+    {% for i in driver.paginator.page_range %}
+      {% if driver.number == i %}
+        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+      {% else %}
+        <li><a href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if driver.has_next %}
+      <li><a href="?page={{ driver.next_page_number }}">&raquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&raquo;</span></li>
+    {% endif %}
+  </ul>
+{% endif %}
+
+
+
+{% endblock content %}
