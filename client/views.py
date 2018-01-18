@@ -11,7 +11,7 @@ import os
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-TOKEN = "462990893:AAEJKiFzAW5FWfOqKiroHixrA0ZYm7xo-UU"
+TOKEN = "xxxxxxx"
 
 # Create your views here.
 @login_required
