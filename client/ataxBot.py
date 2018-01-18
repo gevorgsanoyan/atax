@@ -14,7 +14,7 @@ bot = telebot.TeleBot(TOKEN)
 
 
 gmail_user = 'ataxcurrent@gmail.com'
-gmail_password = 'Tax.123456'
+gmail_password = 'xxxxx'
 
 
 
