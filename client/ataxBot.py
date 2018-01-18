@@ -7,7 +7,7 @@ import smtplib
 from telegramcalendar import create_calendar
 
 
-TOKEN = "462990893:AAEJKiFzAW5FWfOqKiroHixrA0ZYm7xo-UU"
+TOKEN = "XXXXX"
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 bot = telebot.TeleBot(TOKEN)
